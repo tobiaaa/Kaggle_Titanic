@@ -1,7 +1,8 @@
 # Kaggle_Titanic
-Repository for Kaggle Challenge "Titanic - Machine Learning from Disaster"
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tobiaaa/Kaggle_Titanic/)
 \
-![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tobiaaa/Kaggle_Titanic/)
+Repository for Kaggle Challenge "Titanic - Machine Learning from Disaster"
+
 
 ## Data Preparation
 Not available data is filled with a default value.
