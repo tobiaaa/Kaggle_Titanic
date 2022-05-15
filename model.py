@@ -3,6 +3,7 @@ import torch as th
 
 class Model(th.nn.Module):
 	def __init__(self, c_in):
+		super().__init__()
 		self.dropout_1 = th.nn.Dropout(0.4)
 		self.dense_1 = th.nn.Linear(c_in, 128)
 		self.activation_1 = th.nn.ReLU()
@@ -20,6 +21,7 @@ class Model(th.nn.Module):
 		x = self.dense_1(x)
 		x = self.activation_1(x)
 		x = self.dense_2(x)
+		x = self.activation_2(x)
 		x = self.dense_3(x)
 		x = self.activation_3(x)
 		x = self.dense_4(x)

@@ -6,9 +6,12 @@ import json
 
 
 class DatasetCSV(th.utils.data.Dataset):
-	def __init__(self, path, json_path='data_info.json', test_set=False):
+	def __init__(self, path, json_path=None, test_set=False):
 		super().__init__()
-		self._json_path = json_path
+		if json_path is None:
+			self._json_path = path + 'data_info.json'
+		else:
+			self._json_path = json_path
 		self._test_set = test_set
 		train_csv_raw = pd.read_csv(path + 'train.csv')
 		self.train_table = self.replace_nan(train_csv_raw, 'Cabin')
@@ -53,7 +56,7 @@ class DatasetCSV(th.utils.data.Dataset):
 		                    fare_enc,
 		                    emb_enc))
 
-		return enc_vec
+		return enc_vec.float()
 
 	def make_encode_class(self):
 		# One-Hot Encoding
@@ -164,7 +167,6 @@ class DatasetCSV(th.utils.data.Dataset):
 		value_enc = self.encoding_dict['groups_embark'][value]
 		num_groups = self.encoding_dict['num_groups_embark']
 		value_enc = F.one_hot(th.tensor(value_enc), num_groups)
-		print(value_enc)
 		return value_enc
 
 	def __getitem__(self, item):
@@ -174,7 +176,7 @@ class DatasetCSV(th.utils.data.Dataset):
 		if self._test_set:
 			return encoded_row
 
-		target = th.unsqueeze(th.tensor(self.train_table['Survived'][item]), 0)
+		target = th.unsqueeze(th.tensor(self.train_table['Survived'][item]), 0).float()
 
 		return encoded_row, target
 
