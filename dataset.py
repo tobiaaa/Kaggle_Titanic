@@ -13,14 +13,17 @@ class DatasetCSV(th.utils.data.Dataset):
 		else:
 			self._json_path = json_path
 		self._test_set = test_set
-		train_csv_raw = pd.read_csv(path + 'train.csv')
+		if not test_set:
+			train_csv_raw = pd.read_csv(path + 'train.csv')
+		else:
+			train_csv_raw = pd.read_csv(path + 'test.csv')
 		self.train_table = self.replace_nan(train_csv_raw, 'Cabin')
 		self.train_table = self.replace_nan(self.train_table, 'Age')
 		self.train_table = self.replace_nan(self.train_table, 'Embarked', 'N')
 
 		self.num_rows = len(self.train_table.index)
-
-		self.make_json()
+		if not test_set:
+			self.make_json()
 
 		self.encoding_dict = self.read_json()
 
